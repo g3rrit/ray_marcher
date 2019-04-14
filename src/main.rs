@@ -5,9 +5,12 @@ use piston_window::*;
 use std::sync::{Arc, Mutex};
 
 mod canvas;
-mod render;
+mod engine;
+mod geometry;
+mod scene;
+mod object;
 
-use render::Renderer;
+use engine::Engine;
 
 const BACKGROUND_C: [f32; 4] = [0.5, 0.5, 0.5, 1.0];
 const WINDOW_WIDTH: u32 = 800;
@@ -39,7 +42,7 @@ fn main() {
     
     let c = Arc::new(Mutex::new(c));
 
-    let renderer = Renderer::new(Arc::clone(&c));
+    let engine = Engine::new(Arc::clone(&c));
 
     let mut mouse_x: u32 = 0;
     let mut mouse_y: u32 = 0;
@@ -65,7 +68,7 @@ fn main() {
             mouse_y = pos[1] as u32;
         }
         if let Some(_u_a) = e.update_args() {
-            renderer.update();
+            engine.update();
         }
     }
 
